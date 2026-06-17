@@ -4,51 +4,72 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Joachim Kahan - Ingénieur SEM & Data</title>
+    
+    <meta property="og:title" content="Joachim Kahan | Portfolio Ingénieur SEM & Data">
+    <meta property="og:description" content="Découvrez mes projets en modélisation, mécanique, systèmes énergétiques et intelligence artificielle.">
+    <meta property="og:image" content="https://ton_pseudo.github.io/preview.png">
+    <meta property="og:url" content="https://ton_pseudo.github.io/">
+    <meta property="og:type" content="website">
+
     <style>
-        /* Variables CSS pour un thème moderne et tech */
+        /* Variables CSS avec gestion du Mode Clair / Sombre */
         :root {
-            --primary: #1e3a8a; /* Bleu très profond */
-            --secondary: #3b82f6; /* Bleu vif pour les accents */
-            --bg-light: #f1f5f9;
-            --text-dark: #0f172a;
+            --primary: #1e3a8a;
+            --secondary: #3b82f6;
+            --bg-color: #f8fafc;
+            --text-color: #0f172a;
             --text-muted: #475569;
             --card-bg: #ffffff;
+            --border-color: #e2e8f0;
+            --modal-bg: rgba(15, 23, 42, 0.8);
+            --code-bg: #1e293b;
+            --code-text: #e2e8f0;
             --transition: all 0.3s ease;
+        }
+
+        [data-theme="dark"] {
+            --primary: #60a5fa;
+            --secondary: #3b82f6;
+            --bg-color: #0f172a;
+            --text-color: #f8fafc;
+            --text-muted: #94a3b8;
+            --card-bg: #1e293b;
+            --border-color: #334155;
+            --modal-bg: rgba(0, 0, 0, 0.85);
+            --code-bg: #000000;
         }
 
         /* Reset & Base */
         * { box-sizing: border-box; margin: 0; padding: 0; }
         html { scroll-behavior: smooth; font-family: 'Inter', system-ui, sans-serif; }
-        body { background-color: var(--bg-light); color: var(--text-dark); line-height: 1.6; }
+        body { background-color: var(--bg-color); color: var(--text-color); line-height: 1.6; transition: background-color 0.3s, color 0.3s; }
 
         /* Navbar Fixe */
         nav {
-            position: fixed;
-            top: 0; width: 100%;
-            background: rgba(255, 255, 255, 0.95);
-            backdrop-filter: blur(5px);
-            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
-            z-index: 100;
-            display: flex;
-            justify-content: space-between;
-            padding: 1rem 5%;
+            position: fixed; top: 0; width: 100%;
+            background: var(--card-bg);
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            z-index: 100; display: flex; justify-content: space-between; align-items: center;
+            padding: 1rem 5%; transition: var(--transition);
         }
         nav .logo { font-weight: 800; font-size: 1.2rem; color: var(--primary); letter-spacing: 1px; }
-        nav ul { list-style: none; display: flex; gap: 2rem; }
-        nav a { text-decoration: none; color: var(--text-dark); font-weight: 500; transition: var(--transition); }
+        nav ul { list-style: none; display: flex; gap: 2rem; align-items: center; }
+        nav a { text-decoration: none; color: var(--text-color); font-weight: 500; transition: var(--transition); }
         nav a:hover { color: var(--secondary); }
+
+        /* Bouton Thème */
+        .theme-toggle {
+            background: none; border: none; cursor: pointer; font-size: 1.2rem;
+            color: var(--text-color); padding: 0.5rem; border-radius: 50%;
+            transition: var(--transition);
+        }
+        .theme-toggle:hover { background: var(--border-color); }
 
         /* Hero Section (Accueil) */
         .hero {
-            height: 100vh;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            text-align: center;
-            background: linear-gradient(135deg, var(--primary) 0%, #1e40af 100%);
-            color: white;
-            padding: 0 20px;
+            height: 100vh; display: flex; flex-direction: column; justify-content: center; align-items: center;
+            text-align: center; background: linear-gradient(135deg, #1e3a8a 0%, #1e40af 100%);
+            color: white; padding: 0 20px;
         }
         .hero h1 { font-size: 3.5rem; margin-bottom: 1rem; animation: slideUp 0.8s ease-out; }
         .hero p { font-size: 1.3rem; max-width: 700px; opacity: 0.9; animation: slideUp 1s ease-out; }
@@ -63,236 +84,267 @@
         .fade-in { opacity: 0; transform: translateY(30px); transition: opacity 0.6s ease-out, transform 0.6s ease-out; }
         .fade-in.visible { opacity: 1; transform: translateY(0); }
 
-        @keyframes slideUp {
-            from { opacity: 0; transform: translateY(30px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
+        @keyframes slideUp { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
 
         /* Grille Projets */
         .projects-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 2.5rem; }
         .card {
-            background: var(--card-bg);
-            border-radius: 12px;
-            overflow: hidden;
-            box-shadow: 0 10px 15px -3px rgba(0,0,0,0.1);
-            transition: var(--transition);
-            display: flex;
-            flex-direction: column;
-            border-top: 4px solid var(--secondary);
+            background: var(--card-bg); border-radius: 12px; overflow: hidden;
+            box-shadow: 0 10px 15px -3px rgba(0,0,0,0.1); transition: var(--transition);
+            display: flex; flex-direction: column; border-top: 4px solid var(--secondary);
+            border: 1px solid var(--border-color);
         }
         .card:hover { transform: translateY(-10px); box-shadow: 0 20px 25px -5px rgba(0,0,0,0.15); }
         .card-content { padding: 2rem; flex-grow: 1; display: flex; flex-direction: column; }
         .card-content h3 { font-size: 1.4rem; color: var(--primary); margin-bottom: 0.5rem; }
         .card-content .context { font-size: 0.9rem; color: var(--text-muted); font-style: italic; margin-bottom: 1rem; }
-        .card-content p { color: var(--text-dark); margin-bottom: 1.5rem; flex-grow: 1; }
+        .card-content p { color: var(--text-color); margin-bottom: 1.5rem; flex-grow: 1; }
         
         /* Boutons */
         .btn {
-            display: inline-block;
-            background: var(--secondary); color: white;
-            padding: 0.8rem 1.8rem; border-radius: 8px;
-            text-decoration: none; font-weight: 600;
+            display: inline-block; background: var(--secondary); color: white;
+            padding: 0.8rem 1.8rem; border-radius: 8px; text-decoration: none; font-weight: 600;
             transition: var(--transition); border: none; cursor: pointer; text-align: center;
         }
         .btn:hover { background: #2563eb; transform: scale(1.05); }
         .btn-outline { background: transparent; border: 2px solid var(--secondary); color: var(--secondary); }
         .btn-outline:hover { background: var(--secondary); color: white; }
 
+        /* Snippets de Code */
+        pre {
+            background: var(--code-bg); color: var(--code-text);
+            padding: 1rem; border-radius: 8px; overflow-x: auto;
+            font-family: 'Courier New', Courier, monospace; font-size: 0.9rem;
+            margin: 1rem 0; border: 1px solid #334155;
+        }
+
         /* Compétences */
         .skills-container { display: flex; flex-wrap: wrap; gap: 1rem; justify-content: center; }
-        .skill-tag { background: white; border-left: 4px solid var(--secondary); padding: 0.8rem 1.5rem; border-radius: 6px; box-shadow: 0 2px 4px rgba(0,0,0,0.05); font-weight: 500; }
+        .skill-tag { background: var(--card-bg); border-left: 4px solid var(--secondary); padding: 0.8rem 1.5rem; border-radius: 6px; border: 1px solid var(--border-color); font-weight: 500; }
 
-        /* Fenêtres Modales (Pop-ups) */
+        /* Fenêtres Modales */
         .modal {
             display: none; position: fixed; z-index: 1000; left: 0; top: 0;
-            width: 100%; height: 100%; overflow: auto;
-            background-color: rgba(15, 23, 42, 0.8);
-            backdrop-filter: blur(4px);
-            opacity: 0; transition: opacity 0.3s ease;
+            width: 100%; height: 100%; overflow: auto; background-color: var(--modal-bg);
+            backdrop-filter: blur(4px); opacity: 0; transition: opacity 0.3s ease;
         }
         .modal.show { display: flex; align-items: center; justify-content: center; opacity: 1; }
         .modal-content {
-            background-color: #fff; margin: auto; padding: 3rem;
+            background-color: var(--card-bg); margin: auto; padding: 3rem;
             border-radius: 12px; width: 90%; max-width: 800px;
             max-height: 85vh; overflow-y: auto; position: relative;
             transform: translateY(-20px); transition: transform 0.3s ease;
-            box-shadow: 0 25px 50px -12px rgba(0,0,0,0.25);
+            border: 1px solid var(--border-color);
         }
         .modal.show .modal-content { transform: translateY(0); }
-        .close-btn {
-            position: absolute; top: 1.5rem; right: 2rem;
-            color: var(--text-muted); font-size: 2rem; font-weight: bold; cursor: pointer; transition: color 0.2s;
-        }
+        .close-btn { position: absolute; top: 1.5rem; right: 2rem; color: var(--text-muted); font-size: 2rem; font-weight: bold; cursor: pointer; }
         .close-btn:hover { color: #ef4444; }
         .modal-body h4 { color: var(--secondary); margin: 1.5rem 0 0.5rem 0; font-size: 1.2rem; }
-        .modal-body p { margin-bottom: 1rem; text-align: justify; }
 
         /* Footer */
-        footer { background: var(--primary); color: white; text-align: center; padding: 2rem; margin-top: 3rem; }
+        footer { background: var(--card-bg); border-top: 1px solid var(--border-color); color: var(--text-color); text-align: center; padding: 2rem; margin-top: 3rem; }
 
         @media (max-width: 768px) {
             .hero h1 { font-size: 2.5rem; }
-            nav ul { display: none; } /* On masque le menu sur mobile pour simplifier */
+            nav ul { display: none; }
             .modal-content { padding: 2rem; width: 95%; }
         }
     </style>
 </head>
 <body>
 
-    <nav>
+    <nav aria-label="Menu principal">
         <div class="logo">JK.</div>
         <ul>
             <li><a href="#about">Profil</a></li>
             <li><a href="#projects">Projets</a></li>
             <li><a href="#skills">Compétences</a></li>
-            <li><a href="#contact">Contact</a></li>
+            <li><button class="theme-toggle" id="themeToggle" aria-label="Basculer le thème">🌙</button></li>
         </ul>
     </nav>
 
-    <section class="hero">
+    <header class="hero">
         <h1>Joachim Kahan</h1>
         <p>Élève-Ingénieur ENSE3 (SEM) & Double Diplôme IAE</p>
         <p style="font-size: 1.1rem; margin-top: 1rem;">Systèmes Énergétiques | Mécanique | IA & Data</p>
         <a href="#projects" class="btn">Découvrir mes projets</a>
-    </section>
+    </header>
 
-    <section id="about" class="container fade-in">
-        <h2 class="section-title">Profil</h2>
-        <p style="text-align: center; font-size: 1.1rem; max-width: 800px; margin: 0 auto;">
-            Actuellement en deuxième année à Grenoble INP - ENSE3 et en double cursus Ingénieur-Manager à l'IAE. 
-            Mon profil allie la rigueur de la mécanique et de la modélisation physique aux outils modernes d'automatisation et d'IA (RAG, Python). 
-            Prochainement en stage en tant que Chargé d'affaires au sein du groupe Altrad en Suisse, ce portfolio illustre ma capacité à dimensionner, optimiser et coder des solutions d'ingénierie complexes.
-        </p>
-    </section>
+    <main>
+        <section id="about" class="container fade-in">
+            <h2 class="section-title">Profil</h2>
+            <p style="text-align: center; font-size: 1.1rem; max-width: 800px; margin: 0 auto;">
+                Actuellement en deuxième année à Grenoble INP - ENSE3 et en double cursus Ingénieur-Manager à l'IAE. 
+                Mon profil allie la rigueur de la mécanique et de la modélisation physique aux outils modernes d'automatisation et d'IA (RAG, Python). 
+                Prochainement en stage en tant que Chargé d'affaires au sein du groupe Altrad en Suisse, ce portfolio illustre ma capacité à dimensionner, optimiser et coder des solutions d'ingénierie complexes.
+            </p>
+        </section>
 
-    <section id="projects" class="container fade-in">
-        <h2 class="section-title">Réalisations Techniques</h2>
-        <div class="projects-grid">
+        <section id="projects" class="container fade-in">
+            <h2 class="section-title">Réalisations Techniques</h2>
+            <div class="projects-grid">
 
-            <div class="card fade-in">
-                <div class="card-content">
-                    <h3>Modélisation Thermique Dynamique</h3>
-                    <p class="context">Projet Smart Cities</p>
-                    <p>Conception d'un modèle Python from scratch pour évaluer les besoins en chauffage/climatisation d'un espace de vie soumis aux variations climatiques (méthode des volumes finis).</p>
-                    <button class="btn btn-outline" onclick="openModal('modal-thermique')">Lire les détails</button>
-                </div>
+                <article class="card fade-in">
+                    <div class="card-content">
+                        <h3>Modélisation Thermique Dynamique</h3>
+                        <p class="context">Projet Smart Cities</p>
+                        <p>Conception d'un modèle Python from scratch pour évaluer les besoins en chauffage/climatisation d'un espace de vie soumis aux variations climatiques (méthode des volumes finis).</p>
+                        <button class="btn btn-outline" onclick="openModal('modal-thermique')" aria-expanded="false">Lire les détails</button>
+                    </div>
+                </article>
+
+                <article class="card fade-in">
+                    <div class="card-content">
+                        <h3>Moteur IA "Audit Flash"</h3>
+                        <p class="context">Partenariat Industriel Equans</p>
+                        <p>Développement d'une architecture logicielle intégrant un RAG (ChromaDB) et un LLM (Azure OpenAI) pour générer automatiquement des préconisations d'efficacité énergétique fiables.</p>
+                        <button class="btn btn-outline" onclick="openModal('modal-ia')" aria-expanded="false">Lire les détails</button>
+                    </div>
+                </article>
+
+                <article class="card fade-in">
+                    <div class="card-content">
+                        <h3>Hydrolienne Fluviale</h3>
+                        <p class="context">Projet de Conception Mécanique</p>
+                        <p>Étude de faisabilité technico-économique et dimensionnement complet d'une structure hydrocinétique de type Savonius résistante aux contraintes du Rhône.</p>
+                        <button class="btn btn-outline" onclick="openModal('modal-meca')" aria-expanded="false">Lire les détails</button>
+                    </div>
+                </article>
+
+                <article class="card fade-in">
+                    <div class="card-content">
+                        <h3>Microgrid Hybride</h3>
+                        <p class="context">Électrification Hors Réseau (Maroc)</p>
+                        <p>Dimensionnement d'un système de production et de gestion d'énergie (PV + Batteries + Groupe diesel) pour garantir l'autonomie d'un village de 500 habitants.</p>
+                        <button class="btn btn-outline" onclick="openModal('modal-micro')" aria-expanded="false">Lire les détails</button>
+                    </div>
+                </article>
+
             </div>
+        </section>
 
-            <div class="card fade-in">
-                <div class="card-content">
-                    <h3>Moteur IA "Audit Flash"</h3>
-                    <p class="context">Partenariat Industriel Equans</p>
-                    <p>Développement d'une architecture logicielle intégrant un RAG (ChromaDB) et un LLM (Azure OpenAI) pour générer automatiquement des préconisations d'efficacité énergétique fiables.</p>
-                    <button class="btn btn-outline" onclick="openModal('modal-ia')">Lire les détails</button>
-                </div>
+        <section id="skills" class="container fade-in">
+            <h2 class="section-title">Savoir-Faire</h2>
+            <div class="skills-container">
+                <div class="skill-tag">Mécanique des Fluides & RDM</div>
+                <div class="skill-tag">Python (NumPy, Pandas, FastAPI)</div>
+                <div class="skill-tag">IA Générative & Systèmes RAG</div>
+                <div class="skill-tag">Modélisation Dynamique (Espace d'état)</div>
+                <div class="skill-tag">Dimensionnement Électrotechnique</div>
+                <div class="skill-tag">Analyses Technico-Économiques (ROI/CAPEX)</div>
             </div>
+        </section>
 
-            <div class="card fade-in">
-                <div class="card-content">
-                    <h3>Hydrolienne Fluviale</h3>
-                    <p class="context">Projet de Conception Mécanique</p>
-                    <p>Étude de faisabilité technico-économique et dimensionnement complet d'une structure hydrocinétique de type Savonius résistante aux contraintes du Rhône.</p>
-                    <button class="btn btn-outline" onclick="openModal('modal-meca')">Lire les détails</button>
-                </div>
-            </div>
-
-            <div class="card fade-in">
-                <div class="card-content">
-                    <h3>Microgrid Hybride</h3>
-                    <p class="context">Électrification Hors Réseau (Maroc)</p>
-                    <p>Dimensionnement d'un système de production et de gestion d'énergie (PV + Batteries + Groupe diesel) pour garantir l'autonomie d'un village de 500 habitants.</p>
-                    <button class="btn btn-outline" onclick="openModal('modal-micro')">Lire les détails</button>
-                </div>
-            </div>
-
-        </div>
-    </section>
-
-    <section id="skills" class="container fade-in">
-        <h2 class="section-title">Savoir-Faire</h2>
-        <div class="skills-container">
-            <div class="skill-tag">Mécanique des Fluides & RDM</div>
-            <div class="skill-tag">Python (NumPy, Pandas, FastAPI)</div>
-            <div class="skill-tag">IA Générative & Systèmes RAG</div>
-            <div class="skill-tag">Modélisation de Systèmes Dynamiques</div>
-            <div class="skill-tag">Dimensionnement Électrotechnique</div>
-            <div class="skill-tag">Analyses Technico-Économiques (ROI/CAPEX)</div>
-        </div>
-    </section>
-
-    <section id="contact" class="container fade-in" style="text-align: center;">
-        <h2 class="section-title">Contact</h2>
-        <p style="margin-bottom: 2rem; font-size: 1.1rem;">Une question, une opportunité ou simplement envie d'échanger sur ces projets ?</p>
-        <a href="mailto:TON_EMAIL@gmail.com" class="btn">M'envoyer un E-mail</a>
-        <a href="URL_LINKEDIN" class="btn btn-outline" target="_blank">Profil LinkedIn</a>
-    </section>
+        <section id="contact" class="container fade-in" style="text-align: center;">
+            <h2 class="section-title">Contact</h2>
+            <p style="margin-bottom: 2rem; font-size: 1.1rem;">Une opportunité ou une question technique sur ces projets ?</p>
+            <a href="mailto:TON_EMAIL@gmail.com" class="btn">M'envoyer un E-mail</a>
+            <a href="URL_LINKEDIN" class="btn btn-outline" target="_blank">Profil LinkedIn</a>
+        </section>
+    </main>
 
     <footer>
         <p>&copy; 2026 Joachim Kahan. Déployé via GitHub Pages.</p>
     </footer>
 
-    <div id="modal-thermique" class="modal">
+    <div id="modal-thermique" class="modal" role="dialog" aria-modal="true">
         <div class="modal-content">
-            <span class="close-btn" onclick="closeModal('modal-thermique')">&times;</span>
+            <span class="close-btn" onclick="closeModal('modal-thermique')" aria-label="Fermer">&times;</span>
             <div class="modal-body">
                 <h3 style="color: var(--primary); font-size: 1.8rem; margin-bottom: 1rem;">Modélisation Thermique Dynamique d'un Bâtiment</h3>
                 <h4>Contexte du projet</h4>
-                <p>L'objectif de ce projet était de concevoir un modèle numérique capable d'évaluer précisément les besoins en chauffage et en climatisation d'un appartement soumis à des variations climatiques réelles. Il s'agissait de dépasser les bilans thermiques statiques classiques pour créer une véritable simulation dynamique.</p>
-                <h4>Les défis techniques</h4>
-                <p>Le principal défi a été la traduction de phénomènes physiques continus (conduction, convection, rayonnement) en un modèle mathématique discret. Il a fallu modéliser un réseau complexe basé sur la méthode des volumes finis (20 nœuds de température, 26 branches d'échange). L'implémentation sous Python a nécessité une grande rigueur matricielle pour assurer la stabilité numérique (Euler explicite) face à des pas de temps très courts.</p>
-                <h4>Ce que ce projet m'a apporté</h4>
-                <p>Ce travail m'a permis de lier thermodynamique théorique et ingénierie logicielle. J'ai amélioré ma maîtrise de Python pour le calcul scientifique et développé une vision critique sur l'efficacité énergétique : la simulation a prouvé qu'une gestion intelligente des systèmes passifs couplée à un contrôleur à bande morte maintient le confort tout en minimisant drastiquement l'usage de la climatisation mécanique.</p>
+                <p>L'objectif était de concevoir un modèle numérique capable d'évaluer précisément les besoins en chauffage et climatisation soumis aux variations climatiques réelles, dépassant les bilans thermiques statiques.</p>
+                <h4>Les défis techniques & Modélisation</h4>
+                <p>Modélisation d'un réseau par la méthode des volumes finis (20 nœuds de température). L'implémentation sous Python a nécessité une rigueur matricielle pour assurer la stabilité numérique (Euler explicite).</p>
+<pre><code># Extrait : Mise à jour des températures (Euler Explicite)
+def update_temperature(T_current, A, B, U, dt):
+    # Calcul matriciel de l'évolution de la température
+    T_next = T_current + dt * (np.dot(A, T_current) + np.dot(B, U))
+    return T_next
+</code></pre>
+                <h4>Bénéfices & Résultats</h4>
+                <p>La simulation a prouvé qu'une gestion intelligente des systèmes passifs (ventilation nocturne) couplée à un contrôleur à bande morte maintient le confort tout en limitant l'usage mécanique.</p>
+                <a href="#" class="btn btn-outline" target="_blank" style="margin-top: 1rem;">Voir le code sur GitHub</a>
             </div>
         </div>
     </div>
 
-    <div id="modal-ia" class="modal">
+    <div id="modal-ia" class="modal" role="dialog" aria-modal="true">
         <div class="modal-content">
-            <span class="close-btn" onclick="closeModal('modal-ia')">&times;</span>
+            <span class="close-btn" onclick="closeModal('modal-ia')" aria-label="Fermer">&times;</span>
             <div class="modal-body">
                 <h3 style="color: var(--primary); font-size: 1.8rem; margin-bottom: 1rem;">Moteur IA "Audit Flash"</h3>
-                <h4>Contexte du projet</h4>
-                <p>Mené avec le groupe industriel Equans, l'objectif était de développer une architecture logicielle capable d'ingérer des données de bâtiments hétérogènes (DPE PDF, factures, audio) et de suggérer automatiquement des actions de décarbonation pertinentes en s'appuyant sur l'IA.</p>
-                <h4>Les défis techniques</h4>
-                <p>L'intégration de l'IA Générative dans un processus industriel ne tolère aucune "hallucination". J'ai dû concevoir un backend robuste intégrant une base de données vectorielle (ChromaDB) pour un système RAG (Retrieval-Augmented Generation). L'obstacle principal a été d'utiliser des schémas Pydantic stricts pour forcer le LLM (Azure OpenAI) à ne répondre qu'en fonction de la mémoire de l'entreprise sous format JSON.</p>
-                <h4>Ce que ce projet m'a apporté</h4>
-                <p>C'est le projet qui a le plus renforcé mon profil "Data & Logiciel". J'ai basculé du script algorithmique à la conception d'architectures logicielles modernes (FastAPI). J'ai compris comment industrialiser une IA en adoptant une approche "Human-in-the-Loop" : l'outil ne remplace pas l'expert, il pré-mâche la structuration pour lui redonner du temps d'analyse à haute valeur ajoutée.</p>
+                <h4>Contexte du projet (Equans)</h4>
+                <p>Développement d'une architecture backend capable d'ingérer des données hétérogènes (DPE PDF, factures, audio) pour suggérer des actions de décarbonation pertinentes en s'appuyant sur l'IA Générative.</p>
+                <h4>Architecture Technique (RAG)</h4>
+                <p>Pour éviter les hallucinations, j'ai conçu un système RAG exploitant ChromaDB. L'ingénierie de prompt, couplée à la validation stricte via Pydantic, force l'IA (Azure OpenAI) à répondre selon le format métier.</p>
+<pre><code># Extrait : Contrainte de sortie structurée pour le LLM
+class PreconisationAction(BaseModel):
+    titre_action: str = Field(description="Nom court de l'action")
+    capex_estime_euros: float = Field(description="Coût estimé")
+    reduction_co2_kg: float = Field(description="Gain environnemental")
+    justification_historique: str = Field(description="Source ChromaDB")
+</code></pre>
+                <h4>Bénéfices & Résultats</h4>
+                <p>L'approche "Human-in-the-Loop" pré-mâche la structuration des audits avec une précision de 95% sur les natifs, redonnant un temps précieux d'analyse à haute valeur ajoutée aux ingénieurs thermiciens.</p>
             </div>
         </div>
     </div>
 
-    <div id="modal-meca" class="modal">
+    <div id="modal-meca" class="modal" role="dialog" aria-modal="true">
         <div class="modal-content">
-            <span class="close-btn" onclick="closeModal('modal-meca')">&times;</span>
+            <span class="close-btn" onclick="closeModal('modal-meca')" aria-label="Fermer">&times;</span>
             <div class="modal-body">
                 <h3 style="color: var(--primary); font-size: 1.8rem; margin-bottom: 1rem;">Conception Mécanique d'une Hydrolienne Fluviale</h3>
                 <h4>Contexte du projet</h4>
-                <p>Ce projet s'inscrivait dans un appel à projets régional visant à exploiter le potentiel hydrocinétique du Rhône. L'objectif : concevoir une hydrolienne à axe vertical (Savonius) avec une rentabilité financière atteinte en moins de 15 ans.</p>
-                <h4>Les défis mécaniques et structurels</h4>
-                <p>En tant que responsable mécanique, le défi a été de dimensionner une structure de 8,8 m de diamètre résistante au courant fluvial (3,31 m/s) sans exploser le budget. J'ai réalisé des calculs de RDM poussés pour déterminer le moment fléchissant maximal, sélectionner l'alliage adéquat (Aluminium 6061) et l'épaisseur critique (25 mm) des pales, tout en concevant un mât central en acier inoxydable optimisé.</p>
-                <h4>Ce que ce projet m'a apporté</h4>
-                <p>Ce projet a complété mon profil énergétique par une dimension mécanique lourde. J'ai pu lier directement la conception mécanique au modèle d'affaires : j'ai chiffré le CAPEX matériel (~4 000 €) pour prouver qu'avec une production de 62 MWh/an, le système offrait un ROI très robuste de 10,9 ans.</p>
+                <p>Appel à projets visant à exploiter le potentiel hydrocinétique du Rhône (Valence). L'objectif : concevoir une hydrolienne à axe vertical (Savonius) avec une rentabilité financière < 15 ans.</p>
+                <h4>Dimensionnement & RDM</h4>
+                <p>Calculs de RDM poussés pour déterminer le moment fléchissant maximal face au courant (3,31 m/s). Choix de l'alliage (Aluminium 6061) et détermination de l'épaisseur critique (25 mm) des pales de 8,8 m de diamètre.</p>
+                <h4>Étude Économique</h4>
+                <p>J'ai chiffré le CAPEX matériel (~4 000 €) et l'électrotechnique pour prouver qu'avec une production modélisée à 62 MWh/an, le système offrait un ROI très robuste de 10,9 ans pour un budget global de 67k€.</p>
             </div>
         </div>
     </div>
 
-    <div id="modal-micro" class="modal">
+    <div id="modal-micro" class="modal" role="dialog" aria-modal="true">
         <div class="modal-content">
-            <span class="close-btn" onclick="closeModal('modal-micro')">&times;</span>
+            <span class="close-btn" onclick="closeModal('modal-micro')" aria-label="Fermer">&times;</span>
             <div class="modal-body">
                 <h3 style="color: var(--primary); font-size: 1.8rem; margin-bottom: 1rem;">Dimensionnement d'un Microgrid Hybride</h3>
                 <h4>Contexte du projet</h4>
-                <p>Conception d'un système de production et de gestion d'énergie pour un village isolé de 500 habitants au Maroc, totalement déconnecté du réseau, répondant aux besoins vitaux (éclairage, réfrigération, pompage).</p>
-                <h4>Les défis techniques et économiques</h4>
-                <p>Le défi majeur était technico-économique. Une modélisation a montré les limites du 100% solaire : le besoin massif en batteries rendait le CAPEX irréaliste. J'ai optimisé un système hybride équilibré (650 panneaux, 34 batteries, 1 groupe électrogène de secours) en limitant le diesel au strict écrêtage des pics de consommation.</p>
-                <h4>Ce que ce projet m'a apporté</h4>
-                <p>Cette étude a forgé ma vision "système" : une bonne solution technique n'a de valeur que si elle est économiquement viable. J'ai acquis des compétences en dimensionnement d'équipements électriques et démontré que cette hybridation évitait l'émission de près de 1 150 tonnes de CO2 sur 20 ans par rapport au tout-diesel.</p>
+                <p>Conception d'un système de production et de gestion d'énergie autonome pour un village isolé de 500 habitants au Maroc, couvrant les besoins en éclairage, réfrigération et pompage.</p>
+                <h4>Optimisation Technico-Économique</h4>
+                <p>La modélisation a montré que le 100% solaire nécessitait un parc batterie (CAPEX) hors budget. J'ai dimensionné une architecture hybride (650 PV, 34 batteries, groupe diesel) où le thermique est strictement limité au Peak Shaving.</p>
+                <h4>Impact Environnemental</h4>
+                <p>Cette hybridation permet de sécuriser l'apport électrique continu tout en évitant l'émission d'environ 1 150 tonnes de CO2 sur 20 ans par rapport à l'ancien fonctionnement tout-diesel.</p>
             </div>
         </div>
     </div>
 
     <script>
-        // Gestion des Animations au Scroll
+        // --- 1. Gestion du Dark Mode ---
+        const themeToggle = document.getElementById('themeToggle');
+        const currentTheme = localStorage.getItem('theme') || 'light';
+        
+        if (currentTheme === 'dark') {
+            document.documentElement.setAttribute('data-theme', 'dark');
+            themeToggle.textContent = '☀️';
+        }
+
+        themeToggle.addEventListener('click', () => {
+            let theme = document.documentElement.getAttribute('data-theme');
+            if (theme === 'dark') {
+                document.documentElement.removeAttribute('data-theme');
+                localStorage.setItem('theme', 'light');
+                themeToggle.textContent = '🌙';
+            } else {
+                document.documentElement.setAttribute('data-theme', 'dark');
+                localStorage.setItem('theme', 'dark');
+                themeToggle.textContent = '☀️';
+            }
+        });
+
+        // --- 2. Animations au Scroll ---
         const observerOptions = { root: null, rootMargin: '0px', threshold: 0.1 };
         const observer = new IntersectionObserver((entries, observer) => {
             entries.forEach(entry => {
@@ -302,21 +354,24 @@
                 }
             });
         }, observerOptions);
-
         document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
 
-        // Gestion des Modales
+        // --- 3. Gestion des Modales Accessibles ---
         function openModal(modalId) {
-            document.getElementById(modalId).classList.add('show');
-            document.body.style.overflow = 'hidden'; // Empêche le scroll du fond
+            const modal = document.getElementById(modalId);
+            modal.classList.add('show');
+            document.body.style.overflow = 'hidden';
+            // Accessibilité : focus sur la modale
+            modal.setAttribute('aria-hidden', 'false');
         }
 
         function closeModal(modalId) {
-            document.getElementById(modalId).classList.remove('show');
-            document.body.style.overflow = 'auto'; // Réactive le scroll
+            const modal = document.getElementById(modalId);
+            modal.classList.remove('show');
+            document.body.style.overflow = 'auto';
+            modal.setAttribute('aria-hidden', 'true');
         }
 
-        // Fermer la modale si on clique à l'extérieur du bloc blanc
         window.onclick = function(event) {
             if (event.target.classList.contains('modal')) {
                 event.target.classList.remove('show');
@@ -324,6 +379,5 @@
             }
         }
     </script>
-
 </body>
 </html>
