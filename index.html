@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="fr" data-lang="fr">
+<html lang="fr" data-lang="fr" data-theme="light">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -19,8 +19,8 @@
            TOKENS CHROMATIQUES & ÉLÉVATIONS PHYSIQUES (ZÉRO AI SLOP)
            Direction Artistique : Titanium Minéral & Cuivre Anodisé
         ============================================================ */
-        :root {
-            /* Palette Signature Thème Sombre (Par défaut) */
+        :root, [data-theme="dark"] {
+            /* Palette Signature Thème Sombre */
             --bg-color: #0C0E14;
             --bg-secondary: #10141D;
             --card-bg: rgba(18, 22, 32, 0.85);
@@ -2285,8 +2285,8 @@ document.querySelectorAll('.filter-btn').forEach(btn => {
 
 // Gestionnaire de Thème
 const root = document.documentElement;
-let theme = localStorage.getItem('jk-theme') || 'dark';
-root.setAttribute('data-theme', theme === 'dark' ? '' : 'light');
+let theme = localStorage.getItem('jk-theme') || 'light';
+root.setAttribute('data-theme', theme);
 
 function renderThemeIcon() {
     const moon = '<path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none"/>';
@@ -2303,8 +2303,8 @@ function renderThemeIcon() {
 renderThemeIcon();
 
 document.getElementById('themeToggle').addEventListener('click', () => {
-    theme = theme === 'dark' ? 'light' : 'dark';
-    root.setAttribute('data-theme', theme === 'dark' ? '' : 'light');
+    theme = theme === 'light' ? 'dark' : 'light';
+    root.setAttribute('data-theme', theme);
     localStorage.setItem('jk-theme', theme);
     renderThemeIcon();
 });
